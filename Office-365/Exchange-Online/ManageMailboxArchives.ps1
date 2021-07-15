@@ -5,9 +5,9 @@ Write-Output "Checking ExchangeOnlineManagement is installed..."
 $IsInstalled = Get-InstalledModule -Name ExchangeOnlineManagement
 
 
-If ($IsInstalled.Name -eq "ExchangeOnlineManagement") {Write-Host "ExchangeOnlineManagement is installed." -ForegroundColor Green}
+if ($IsInstalled.Name -eq "ExchangeOnlineManagement") {Write-Host "ExchangeOnlineManagement is installed." -ForegroundColor Green}
 
-Else {
+else {
     Write-Host "ExchangeOnlineManagement isn't installed..." -ForegroundColor Red
     Install-Module -Name ExchangeOnlineManagement
 }
@@ -18,8 +18,8 @@ Else {
 
 $GetSessions = Get-PSSession | Select-Object -Property State, Name
 $IsConnected = (@($GetSessions) -like '@{State=Opened; Name=ExchangeOnlineInternalSession*').Count -gt 0
-If ($IsConnected -ne "True") {
-Connect-ExchangeOnline
+if ($IsConnected -ne "True") {
+    Connect-ExchangeOnline
 }
 
 $Options = 1
@@ -46,12 +46,12 @@ $Alias = Write-Output $Results.Alias
 switch ($Options) {
     1 {
         foreach ($i in $Alias){
-            Enable-Mailbox -Identity $i -Archive
+            Enable-Mailbox -Identity $i -Archive -Confirm:$False
         }}
 
     2 { 
         foreach ($i in $Alias){
-            Disable-Mailbox -Identity $i -Archive
+            Disable-Mailbox -Identity $i -Archive -Confirm:$False
         }
 
     }
